@@ -233,7 +233,7 @@ static double _pl_tsfn(double phi, double sinphi, double e) {
 static cl_int _pl_set_projection_kernel_args(PLContext *ctx, cl_kernel kernel,
         cl_mem xy_in, cl_mem xy_out, size_t count, PLSpheroidInfo *info, int *offset_ptr) {
 	cl_int error = 0;
-	cl_uint vec_count = ck_padding(count, PL_FLOAT_VECTOR_SIZE) / PL_FLOAT_VECTOR_SIZE;
+	cl_uint vec_count = (cl_uint)ck_padding(count, PL_FLOAT_VECTOR_SIZE) / PL_FLOAT_VECTOR_SIZE;
 	int offset = *offset_ptr;
 
 	error |= pl_set_kernel_arg_mem(ctx, kernel, offset++, xy_in);
@@ -455,11 +455,9 @@ cl_int pl_enqueue_kernel_lambert_conformal_conic(PLContext *pl_ctx, cl_kernel ke
     double rho0, c, n, sinphi1, cosphi1, sinphi2;
     int secant = 0;
     
-    sinphi1 = sin(phi1);
+    n = sinphi1 = sin(phi1);
     cosphi1 = cos(phi1);
-    if (fabs(phi1 - phi2) < 1.e-7) {
-        n = sinphi1;
-    } else {
+    if (fabs(phi1 - phi2) >= 1.e-7) {
         secant = 1;
     }
     
@@ -572,7 +570,7 @@ cl_int pl_enqueue_kernel_robinson(PLContext *pl_ctx, cl_kernel kernel,
 
 	error |= pl_set_kernel_arg_mem(pl_ctx, kernel, argc++, xy_in);
 	error |= pl_set_kernel_arg_mem(pl_ctx, kernel, argc++, xy_out);
-	error |= pl_set_kernel_arg_uint(pl_ctx, kernel, argc++, count);
+	error |= pl_set_kernel_arg_uint(pl_ctx, kernel, argc++, (cl_uint)count);
 
 	error |= pl_set_kernel_arg_float(pl_ctx, kernel, argc++, params->scale * info.major_axis);
 	error |= pl_set_kernel_arg_float(pl_ctx, kernel, argc++, params->x0);
@@ -619,7 +617,7 @@ cl_int pl_enqueue_kernel_winkel_tripel(PLContext *pl_ctx, cl_kernel kernel,
 
     error |= pl_set_kernel_arg_mem(pl_ctx, kernel, argc++, xy_in);
 	error |= pl_set_kernel_arg_mem(pl_ctx, kernel, argc++, xy_out);
-	error |= pl_set_kernel_arg_uint(pl_ctx, kernel, argc++, vec_count);
+	error |= pl_set_kernel_arg_uint(pl_ctx, kernel, argc++, (cl_uint)vec_count);
     error |= pl_set_kernel_arg_float(pl_ctx, kernel, argc++, params->scale * info.major_axis);
     error |= pl_set_kernel_arg_float(pl_ctx, kernel, argc++, params->x0);
     error |= pl_set_kernel_arg_float(pl_ctx, kernel, argc++, params->y0);

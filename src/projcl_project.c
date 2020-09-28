@@ -16,7 +16,7 @@
 
 PLProjectionBuffer *pl_load_projection_data(PLContext *pl_ctx, const float *xy, size_t count, cl_bool copy, cl_int *outError) {
 	float *xy_pad = NULL;
-	int xy_pad_count = ck_padding(count, PL_FLOAT_VECTOR_SIZE);
+	unsigned long xy_pad_count = ck_padding(count, PL_FLOAT_VECTOR_SIZE);
 
 	PLProjectionBuffer *pl_buf = NULL;
 	cl_int error = CL_SUCCESS;
@@ -55,7 +55,7 @@ PLProjectionBuffer *pl_load_projection_data(PLContext *pl_ctx, const float *xy, 
 		goto cleanup;
 	}
 	
-	pl_buf->count = count;
+	pl_buf->count = (cl_uint)count;
 	
 cleanup:
 	if (xy_pad && needs_free)

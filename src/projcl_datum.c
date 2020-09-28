@@ -19,7 +19,7 @@ PLDatumShiftBuffer *pl_load_datum_shift_data(PLContext *pl_ctx, PLSpheroid src_s
     cl_int error = CL_SUCCESS;
     
     float *xy_pad_in = NULL;
-    int xy_pad_count = ck_padding(n, PL_FLOAT_VECTOR_SIZE);
+    unsigned long xy_pad_count = ck_padding(n, PL_FLOAT_VECTOR_SIZE);
     
     cl_mem xy_in = NULL, x_rw = NULL, y_rw = NULL, z_rw = NULL;
     
@@ -61,7 +61,7 @@ PLDatumShiftBuffer *pl_load_datum_shift_data(PLContext *pl_ctx, PLSpheroid src_s
         error = CL_OUT_OF_HOST_MEMORY;
         goto cleanup;
     }
-    pl_buf->count = n;
+    pl_buf->count = (cl_uint)n;
     pl_buf->xy_in = xy_in;
     pl_buf->xy_out = NULL;
     pl_buf->x_rw = x_rw;

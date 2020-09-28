@@ -24,16 +24,16 @@ PLForwardGeodesicFixedDistanceBuffer *pl_load_forward_geodesic_fixed_distance_da
 	}
 	pl_buf->xy_in = NULL;
 	pl_buf->az_in = NULL;
-	pl_buf->xy_count = xy_count;
-	pl_buf->az_count = az_count;
+	pl_buf->xy_count = (cl_uint)xy_count;
+	pl_buf->az_count = (cl_uint)az_count;
 	pl_buf->phi_sincos = NULL;
 	pl_buf->az_sincos = NULL;
 	
 	
 	float *az_pad_in = NULL, *xy_pad_in = NULL;
 	
-	int az_pad_count = ck_padding(az_count, PL_FLOAT_VECTOR_SIZE);
-	int xy_pad_count = ck_padding(xy_count, PL_FLOAT_VECTOR_SIZE);
+	unsigned long az_pad_count = ck_padding(az_count, PL_FLOAT_VECTOR_SIZE);
+	unsigned long xy_pad_count = ck_padding(xy_count, PL_FLOAT_VECTOR_SIZE);
 	
 	if ((az_pad_in = malloc(az_pad_count * sizeof(float))) == NULL) {
 		error = CL_OUT_OF_HOST_MEMORY;
@@ -116,12 +116,12 @@ PLForwardGeodesicFixedAngleBuffer *pl_load_forward_geodesic_fixed_angle_data(PLC
 	}
     
     pl_buf->dist_in = NULL;
-    pl_buf->dist_count = dist_count;
+    pl_buf->dist_count = (cl_uint)dist_count;
     pl_buf->xy_out = NULL;
     
     float *dist_pad_in;
     
-    int dist_pad_count = ck_padding(dist_count, PL_FLOAT_VECTOR_SIZE);
+    unsigned long dist_pad_count = ck_padding(dist_count, PL_FLOAT_VECTOR_SIZE);
     
     if ((dist_pad_in = malloc(dist_pad_count * sizeof(float))) == NULL) {
         error = CL_OUT_OF_HOST_MEMORY;
@@ -248,12 +248,12 @@ PLInverseGeodesicBuffer *pl_load_inverse_geodesic_data(PLContext *pl_ctx,
 	}
 	pl_buf->xy1_in = NULL;
 	pl_buf->xy2_in = NULL;
-	pl_buf->xy1_count = xy1_count;
-	pl_buf->xy2_count = xy2_count;
+	pl_buf->xy1_count = (cl_uint)xy1_count;
+	pl_buf->xy2_count = (cl_uint)xy2_count;
 	pl_buf->dist_out = NULL;
 	
 	float *xy2_pad_in = NULL;
-	int xy2_pad_count = ck_padding(xy2_count, PL_FLOAT_VECTOR_SIZE);
+	unsigned long xy2_pad_count = ck_padding(xy2_count, PL_FLOAT_VECTOR_SIZE);
 	
 	if ((xy2_pad_in = malloc(xy2_pad_count * sizeof(float) * 2)) == NULL) {
 		error = CL_OUT_OF_HOST_MEMORY;

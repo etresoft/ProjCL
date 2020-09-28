@@ -41,7 +41,7 @@ PLProjectionBuffer *pl_load_projection_data(PLContext *pl_ctx, const float *xy, 
 void pl_unload_projection_data(PLProjectionBuffer *pl_buf);
 
 
-PLProjectionParams *pl_params_init();
+PLProjectionParams *pl_params_init(void);
 void pl_params_free(PLProjectionParams *params);
 void pl_params_set_scale(PLProjectionParams *params, double k0);
 void pl_params_set_spheroid(PLProjectionParams *params, PLSpheroid spheroid);

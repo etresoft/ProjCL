@@ -214,7 +214,7 @@ cl_int pl_shift_grid_datum(PLContext *pl_ctx, PLPointGridBuffer *src, PLDatum sr
                            PLPointGridBuffer *dst, PLDatum dst_datum, PLSpheroid dst_spheroid) {    
     cl_int error = CL_SUCCESS;
     
-    int xy_pad_count = ck_padding(src->height * src->width, PL_FLOAT_VECTOR_SIZE);
+    unsigned long xy_pad_count = ck_padding(src->height * src->width, PL_FLOAT_VECTOR_SIZE);
     
     cl_mem x_rw = NULL, y_rw = NULL, z_rw = NULL;
     PLDatumShiftBuffer *pl_buf = NULL;
@@ -243,7 +243,7 @@ cl_int pl_shift_grid_datum(PLContext *pl_ctx, PLPointGridBuffer *src, PLDatum sr
     }
     
     pl_buf = calloc(1,  sizeof(PLDatumShiftBuffer));
-    pl_buf->count = src->height * src->width;
+    pl_buf->count = (cl_uint)(src->height * src->width);
     pl_buf->xy_in = src->grid;
     pl_buf->xy_out = dst->grid;
     pl_buf->x_rw = x_rw;
@@ -407,7 +407,7 @@ cl_int pl_sample_image_array(PLContext *pl_ctx, PLPointGridBuffer *grid, PLImage
     cl_uint argc = 0;
     error |= pl_set_kernel_arg_mem(pl_ctx, kernel, argc++, grid->grid);
     error |= pl_set_kernel_arg_mem(pl_ctx, kernel, argc++, buf->image);
-    error |= pl_set_kernel_arg_uint(pl_ctx, kernel, argc++, buf->tiles_across);
+    error |= pl_set_kernel_arg_uint(pl_ctx, kernel, argc++, (cl_uint)(buf->tiles_across));
     error |= pl_set_kernel_arg_mem(pl_ctx, kernel, argc++, out_image);
     
     if (error != CL_SUCCESS) {

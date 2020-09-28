@@ -13,7 +13,7 @@
 #include <stdio.h>
 
 void _pl_copy_pad(float *dest, size_t dest_count, const float *src, size_t src_count) {
-	int i;
+	size_t i;
 	for (i=0; i<src_count; i++) {
 		dest[i] = src[i];
 	}
