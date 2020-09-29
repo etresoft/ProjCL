@@ -418,6 +418,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/src",
 				);
+				OTHER_CFLAGS = "-DHAVE_PROJ4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.etresoft.ProjMetal;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -446,6 +447,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/src",
 				);
+				OTHER_CFLAGS = "-DHAVE_PROJ4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.etresoft.ProjMetal;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
